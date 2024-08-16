@@ -60,7 +60,7 @@ sudo vim /etc/hosts
 
 ### apply ingress
 
-kubectl apply -f ./dashboard-ingress.yaml
+kubectl apply -f ./ingress/dashboard-ingress.yaml
 
 ### start tunnel
 
