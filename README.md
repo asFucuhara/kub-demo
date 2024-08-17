@@ -71,11 +71,40 @@ minikube tunnel
 kubectl get ingress
 
 should look something like this:
-NAME                CLASS   HOSTS           ADDRESS        PORTS   AGE
-dashboard-ingress   nginx   dashboard.com   192.168.49.2   80      106m
+NAME CLASS HOSTS ADDRESS PORTS AGE
+dashboard-ingress nginx dashboard.com 192.168.49.2 80 106m
 
 ### test on browser with link:
 
 dashboard.com
 
 ### TODO: CLEAN UP
+kubectl delete -f ./ingress/dashboard-ingress.yaml
+kubectl delete deployment.apps/dashboard-metrics-scraper deployment.apps/kubernetes-dashboard
+kubectl delete service/dashboard-metrics-scraper
+kubectl delete service/kubernetes-dashboard
+
+######
+
+######
+
+###### cofigmap and secret volume example using mosquitto
+
+kubectl apply -f ./configmap-secret-volume/secret-file.yaml -f ./configmap-secret-volume/config-file.yaml
+kubectl apply -f ./configmap-secret-volume/mosquitto.yaml
+
+### check volumes -> they shoul be as described in secret-file.yaml and config-file.yaml
+
+kubectl exec -it mosquitto-76954b5c5f-g4dp8 -- /bin/sh
+
+cat /mosquitto/secret/secret.file
+cat /mosquitto/config/mosquitto.conf
+
+### clean up
+
+kubectl delete -f ./configmap-secret-volume/secret-file.yaml \
+ -f ./configmap-secret-volume/config-file.yaml \
+ -f ./configmap-secret-volume/mosquitto.yaml
+
+
+deployment.apps/dashboard-metrics-scraper deployment.apps/kubernetes-dashboard
